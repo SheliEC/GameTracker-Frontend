@@ -1,37 +1,60 @@
 // Archivo: frontend/src/hooks/useGamesHook.js
 
-import { useState, useEffect } from 'react'; // <<<< LÍNEA CORREGIDA
-import axios from 'axios'; // Usamos Axios para las peticiones
+// Archivo: frontend/src/hooks/useGamesHook.js (SOLUCIÓN DEFINITIVA)
+
+import { useState, useEffect, useCallback } from 'react'; // <--- CAMBIO 1: AGREGAR useCallback
+import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:4000/api/games';
 
 const useGamesHook = () => {
-    const [games, setGames] = useState(null); // Estado para guardar los juegos
-    const [isLoading, setIsLoading] = useState(true); // Estado para saber si está cargando
-    const [error, setError] = useState(null); // Estado para manejar errores
+    // 1. ESTADOS
+    const [games, setGames] = useState(null); 
+    const [isLoading, setIsLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
+    // 2. FUNCIÓN DE ACTUALIZACIÓN DE ESTADO (DISPATCH)
+    // CAMBIO 2: ENVOLVEMOS en useCallback y la lista de dependencias está vacía [].
+    const dispatch = useCallback((action) => {
+        if (action.type === 'CREATE_GAME' && action.payload) {
+            setGames(prevGames => {
+                if (!prevGames) return [action.payload];
+                return [action.payload, ...prevGames];
+            }); 
+        }
+        
+        if (action.type === 'DELETE_GAME' && action.payload) {
+            setGames(prevGames => {
+                if (!prevGames) return null; 
+                
+                // Filtramos, forzando la conversión a String
+                return prevGames.filter(
+                    game => String(game._id) !== String(action.payload._id)
+                );
+            });
+        }
+    }, [setGames]); // <- setGames nunca cambia, pero se pone para ser estricto con React.
+
+    // 3. EFECTO DE CARGA INICIAL
+    // ... (El resto del código useEffect sin cambios) ...
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                // Petición GET a tu API del Backend
                 const response = await axios.get(API_BASE_URL);
-                
-                // Guardamos los datos de juegos en el estado
                 setGames(response.data); 
-                setError(null); // Limpiamos errores
+                setError(null);
             } catch (err) {
-                // Si la API falla (ej: el Backend no está corriendo)
                 setError('No se pudo conectar al Backend o cargar los juegos. Asegúrate de que el servidor (Node.js) esté activo.');
             } finally {
-                setIsLoading(false); // La carga ha terminado (sea exitosa o con error)
+                setIsLoading(false);
             }
         };
 
         fetchGames();
-    }, []); // El array vacío [] asegura que el efecto se ejecute solo una vez al inicio
+    }, []); 
 
-    // El hook retorna los datos y el estado de la petición
-    return { games, isLoading, error, setGames };
+    // 4. RETORNO DEL HOOK
+    return { games, isLoading, error, dispatch }; 
 };
 
 export default useGamesHook;

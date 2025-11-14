@@ -1,12 +1,15 @@
-// Archivo: frontend/src/main.jsx
+// Archivo: frontend/src/main.jsx (ACTUALIZADO)
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-// NOTA: Asegúrate de que no esté la línea: import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import { GameContextProvider } from './context/GameContext'; // ¡VERIFICA ESTE PATH!
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    {/* Asegúrate de que este componente esté cerrado correctamente */}
+    <GameContextProvider> 
+      <App />
+    </GameContextProvider>
   </React.StrictMode>,
-) 
+);

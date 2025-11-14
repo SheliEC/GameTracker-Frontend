@@ -1,30 +1,23 @@
-// Archivo: frontend/src/components/GameForm.jsx (CORREGIDO)
+// Archivo: frontend/src/components/GameForm.jsx (VERIFICACIÓN FINAL)
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useCreateGameHook from '../hooks/useCreateGameHook';
+import { GameContext } from '../context/GameContext'; 
 
 function GameForm() {
-    // ... (Estados iniciales - sin cambios)
     const [title, setTitle] = useState('');
     const [platform, setPlatform] = useState('');
     const [hours, setHours] = useState('');
     const [error, setError] = useState(null); 
     const [emptyFields, setEmptyFields] = useState([]);
     
-    // Hook de creación de la API
     const { createGame, isLoading, error: apiError } = useCreateGameHook();
+    const { dispatch } = useContext(GameContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
-
-        // Aseguramos que las horas se envíen como número (0 si está vacío)
-        const game = { 
-            title, 
-            platform, 
-            hours: hours ? Number(hours) : 0 
-        }; // <<<< Punto 1: Las horas se convierten a número o 0.
+        const game = { title, platform, hours: hours ? Number(hours) : 0 };
         
-        // --- Validación Simple de Campos ---
         const missingFields = Object.keys(game).filter(key => {
             return (key === 'title' || key === 'platform') && !game[key];
         });
@@ -37,27 +30,19 @@ function GameForm() {
         setError(null);
         setEmptyFields([]);
 
-        // --- Llamada al Hook para enviar datos al Backend ---
         const createdGame = await createGame(game);
 
         if (createdGame) {
-            // Si tiene éxito, limpia el formulario y muestra el mensaje
+            dispatch({ type: 'CREATE_GAME', payload: createdGame });
             setTitle('');
             setPlatform('');
             setHours('');
-            
-            // >>> PUNTO CLAVE: Aquí se muestra el mensaje en la consola del navegador (F12)
-            console.log('Juego creado exitosamente:', createdGame); 
-
-            // **Opcional:** Mostrar un mensaje temporal en la interfaz (no obligatorio por ahora)
-            // setError('¡Juego creado con éxito!'); 
-            
+            console.log('Juego creado exitosamente:', createdGame);
         }
     };
 
     return (
         <form className="game-form" onSubmit={handleSubmit}>
-            {/* ... (Todo el resto del formulario sigue igual) ... */}
             <h3>Añadir Nuevo Juego</h3>
 
             <label>Título del Juego:</label>
@@ -87,11 +72,10 @@ function GameForm() {
                 {isLoading ? 'Añadiendo...' : 'Añadir Juego'}
             </button>
             
-            {/* Mostrar errores del formulario o de la API */}
             {error && <div className="form-error">{error}</div>}
             {apiError && <div className="form-error">{apiError}</div>}
         </form>
     );
 }
 
-export default GameForm; 
+export default GameForm;

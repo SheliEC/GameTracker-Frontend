@@ -1,79 +1,96 @@
-// Archivo: frontend/src/components/GameForm.jsx (VERIFICACIÓN FINAL)
+// Archivo: frontend/src/components/GameForm.jsx (CON CAMPOS ADICIONALES)
 
 import { useState, useContext } from 'react';
 import useCreateGameHook from '../hooks/useCreateGameHook';
 import { GameContext } from '../context/GameContext'; 
 
 function GameForm() {
+    // ⬇️ ESTADOS: Añadimos rating y review
     const [title, setTitle] = useState('');
     const [platform, setPlatform] = useState('');
-    const [hours, setHours] = useState('');
+    const [hoursPlayed, setHoursPlayed] = useState(''); 
+    const [rating, setRating] = useState(''); // Nuevo
+    const [review, setReview] = useState(''); // Nuevo
     const [error, setError] = useState(null); 
-    const [emptyFields, setEmptyFields] = useState([]);
-    
+
     const { createGame, isLoading, error: apiError } = useCreateGameHook();
     const { dispatch } = useContext(GameContext);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
-        const game = { title, platform, hours: hours ? Number(hours) : 0 };
+        e.preventDefault();
+        setError(null);
         
-        const missingFields = Object.keys(game).filter(key => {
-            return (key === 'title' || key === 'platform') && !game[key];
-        });
+        const hoursToSend = hoursPlayed ? Number(hoursPlayed) : 0; 
+        const ratingToSend = rating ? Number(rating) : null; // Enviamos null si está vacío
 
-        if (missingFields.length > 0) {
-            setError('Por favor, completa el título y la plataforma.');
-            setEmptyFields(missingFields);
+        // ⬇️ DATOS: Incluir rating y review
+        const gameData = { title, platform, hoursPlayed: hoursToSend, rating: ratingToSend, review };
+
+        if (!title || !platform) {
+            setError('El título y la plataforma son campos obligatorios.');
             return;
         }
-        setError(null);
-        setEmptyFields([]);
 
-        const createdGame = await createGame(game);
+        const newGame = await createGame(gameData);
 
-        if (createdGame) {
-            dispatch({ type: 'CREATE_GAME', payload: createdGame });
+        if (newGame) {
+            dispatch({ type: 'CREATE_GAME', payload: newGame });
+
+            // ⬇️ LIMPIEZA DE ESTADOS
             setTitle('');
             setPlatform('');
-            setHours('');
-            console.log('Juego creado exitosamente:', createdGame);
+            setHoursPlayed('');
+            setRating('');
+            setReview('');
         }
     };
 
     return (
-        <form className="game-form" onSubmit={handleSubmit}>
+        <form className="create-game-form" onSubmit={handleSubmit}>
             <h3>Añadir Nuevo Juego</h3>
 
             <label>Título del Juego:</label>
             <input 
-                type="text"
+                type="text" 
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                className={emptyFields.includes('title') ? 'error' : ''}
             />
 
             <label>Plataforma:</label>
             <input 
-                type="text"
+                type="text" 
                 onChange={(e) => setPlatform(e.target.value)}
                 value={platform}
-                className={emptyFields.includes('platform') ? 'error' : ''}
             />
-
+            
             <label>Horas Jugadas (Opcional):</label>
             <input 
-                type="number"
-                onChange={(e) => setHours(e.target.value)}
-                value={hours}
+                type="number" 
+                onChange={(e) => setHoursPlayed(e.target.value)}
+                value={hoursPlayed}
             />
+            
+            {/* ⬇️ NUEVOS CAMPOS: Calificación y Reseña */}
+            <label>Calificación (1-10):</label>
+            <input 
+                type="number" 
+                min="1" max="10"
+                onChange={(e) => setRating(e.target.value)}
+                value={rating}
+            />
+            
+            <label>Reseña:</label>
+            <textarea
+                onChange={(e) => setReview(e.target.value)}
+                value={review}
+            />
+            {/* ⬆️ FIN NUEVOS CAMPOS */}
 
-            <button disabled={isLoading}>
+            <button disabled={isLoading} type="submit">
                 {isLoading ? 'Añadiendo...' : 'Añadir Juego'}
             </button>
             
-            {error && <div className="form-error">{error}</div>}
-            {apiError && <div className="form-error">{apiError}</div>}
+            {(error || apiError) && <div className="form-error">{error || apiError}</div>}
         </form>
     );
 }

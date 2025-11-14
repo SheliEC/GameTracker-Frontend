@@ -13,8 +13,10 @@ const useGamesHook = () => {
     const [isLoading, setIsLoading] = useState(true); 
     const [error, setError] = useState(null); 
 
+   // Archivo: frontend/src/hooks/useGamesHook.js (FUNCIÓN DISPATCH CON UPDATE)
+// ... (El código de importaciones y estados va arriba) ...
+
     // 2. FUNCIÓN DE ACTUALIZACIÓN DE ESTADO (DISPATCH)
-    // CAMBIO 2: ENVOLVEMOS en useCallback y la lista de dependencias está vacía [].
     const dispatch = useCallback((action) => {
         if (action.type === 'CREATE_GAME' && action.payload) {
             setGames(prevGames => {
@@ -26,15 +28,25 @@ const useGamesHook = () => {
         if (action.type === 'DELETE_GAME' && action.payload) {
             setGames(prevGames => {
                 if (!prevGames) return null; 
-                
-                // Filtramos, forzando la conversión a String
                 return prevGames.filter(
                     game => String(game._id) !== String(action.payload._id)
                 );
             });
         }
-    }, [setGames]); // <- setGames nunca cambia, pero se pone para ser estricto con React.
+        
+        // ⬇️ LÓGICA DE ACTUALIZACIÓN (UPDATE)
+        if (action.type === 'UPDATE_GAME' && action.payload) {
+            setGames(prevGames => {
+                if (!prevGames) return null;
+                // Mapea la lista. Si encuentra el ID, reemplaza el juego. Si no, lo deja.
+                return prevGames.map(game => 
+                    game._id === action.payload._id ? action.payload : game
+                );
+            });
+        }
 
+    }, [setGames]);
+    
     // 3. EFECTO DE CARGA INICIAL
     // ... (El resto del código useEffect sin cambios) ...
     useEffect(() => {

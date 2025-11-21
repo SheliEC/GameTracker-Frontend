@@ -1,0 +1,366 @@
+/* ============================================================================
+   INICIO.CSS — Estilo mejorado para la página Inicio (Neón, Partículas, Anim.)
+   ============================================================================ */
+
+/* --- Variables específicas para Inicio (heredan del global si existen) ---- */
+html, body {
+  background: #0d0b11 !important;
+  color: #f0eaff;
+}
+
+:root {
+  --neon: #8a2be2;
+  --neon-2: #b37aff;
+  --neon-accent: #5fd4ff;
+  --bg-dark: #0f0e14;
+  --surface: #18161b;
+  --muted: #bdb3d8;
+  --glass: rgba(255,255,255,0.03);
+  --transition-fast: 180ms;
+  --transition: 300ms;
+}
+
+/* ===========================
+   Reset / contenedor general
+   =========================== */
+.inicio-page {
+  position: relative;
+  overflow: hidden; /* para partículas */
+  background: linear-gradient(180deg, rgba(8,6,12,1) 0%, rgba(15,13,20,1) 100%);
+  padding: 28px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  color: #f0eaff;
+}
+
+/* ===========================
+   PARTICULAS (CSS puro, sutil)
+   =========================== */
+/* Contenedor de partículas: usa pseudo-elementos del main container */
+.inicio-page::before,
+.inicio-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fondo de partículas: motitas y líneas sutiles */
+.inicio-page::before {
+  background-image:
+    radial-gradient(rgba(140,80,255,0.06) 1px, transparent 1px),
+    radial-gradient(rgba(95,212,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  opacity: 0.6;
+  transform: translateZ(0);
+  animation: slowDrift 18s linear infinite;
+  mix-blend-mode: screen;
+  filter: blur(6px) saturate(1.1);
+}
+
+/* Sparkles animados */
+.inicio-page::after {
+  background-image: radial-gradient(circle at 20% 30%, rgba(138,43,226,0.14), transparent 10%),
+                    radial-gradient(circle at 80% 70%, rgba(95,212,255,0.09), transparent 10%),
+                    radial-gradient(circle at 50% 15%, rgba(180,110,255,0.06), transparent 12%);
+  opacity: 0.95;
+  animation: slowPulse 6s ease-in-out infinite;
+  filter: blur(6px);
+}
+
+/* Animaciones globales de partículas */
+@keyframes slowDrift {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-12px) translateX(6px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+@keyframes slowPulse {
+  0% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 0.9; transform: scale(1); }
+}
+
+/* ===========================
+   HERO SECTION (layout)
+   =========================== */
+.hero-section {
+  position: relative;
+  z-index: 2; /* por encima de partículas */
+  padding: 26px;
+  margin-bottom: 28px;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Lado izquierdo */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 3;
+}
+
+/* Título principal con glow */
+.hero-title {
+  font-size: clamp(30px, 4.2vw, 46px);
+  margin: 0;
+  color: var(--neon);
+  text-shadow:
+    0 0 20px rgba(138,43,226,0.18),
+    0 0 40px rgba(138,43,226,0.08);
+  letter-spacing: -0.6px;
+}
+
+/* Subtitulo */
+.hero-sub {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+/* CTA buttons styling with neon hover */
+.hero-ctas { display:flex; gap:12px; margin-top:8px; }
+.cta-btn {
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cta-btn.primary {
+  background: linear-gradient(90deg, var(--neon), var(--neon-accent));
+  color: white;
+  box-shadow: 0 6px 26px rgba(138,43,226,0.12);
+}
+.cta-btn.ghost {
+  background: rgba(255,255,255,0.02);
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.cta-btn.primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 40px rgba(138,43,226,0.18); }
+.cta-btn.ghost:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(95,212,255,0.04); }
+
+/* STATS */
+.hero-stats { display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; }
+.stat {
+  min-width: 110px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border: 1px solid rgba(255,255,255,0.03);
+  text-align:center;
+  box-shadow: 0 6px 18px rgba(8,6,12,0.6);
+}
+.stat-num { display:block; font-size:20px; font-weight:800; color: var(--neon-accent); }
+.stat-label { color: var(--muted); font-size:12px; }
+
+/* ===========================
+   HERO CARD (lado derecho)
+   =========================== */
+.hero-right { display:flex; justify-content:center; align-items:flex-start; z-index:3; }
+.hero-card {
+  width: 100%;
+  max-width: 360px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid rgba(160,91,255,0.06);
+  box-shadow: 0 12px 40px rgba(12,10,16,0.6), 0 0 18px rgba(160,91,255,0.045) inset;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+/* Neon top band */
+.hero-card-top {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Card hover: subtle tilt + glow */
+.hero-card:hover {
+  transform: translateY(-6px) rotateX(0.6deg);
+  box-shadow: 0 18px 60px rgba(160,91,255,0.14), 0 0 36px rgba(160,91,255,0.08);
+}
+
+/* Hero card inner layout */
+.hero-card-body { display:flex; gap:12px; align-items:center; }
+
+/* Cover placeholder or last-cover */
+.cover-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(161,117,255,0.12), rgba(95,212,255,0.06));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 20px rgba(138,43,226,0.04), 0 0 10px rgba(161,117,255,0.03) inset;
+  flex-shrink:0;
+  overflow:hidden;
+}
+
+/* Si se muestra imagen real: ajustar sin recortar demasiado (mantiene proporciones) */
+.last-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transform-origin: center;
+  transition: transform 450ms ease;
+}
+.cover-placeholder:hover .last-cover { transform: scale(1.05); }
+
+/* Texto de info */
+.hero-card-info h4 { margin:0 0 6px 0; color: var(--neon); font-size: 1.05rem; }
+.muted { color: var(--muted); font-size:13px; }
+.mini-stats { display:flex; gap:10px; margin-top:8px; color:var(--muted); font-size:13px; }
+
+/* ===========================
+   TARJETA MOTIVACIONAL (alternativa ampliada)
+   =========================== */
+.motivational-card {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(180deg, rgba(12,8,18,0.9), rgba(22,12,34,0.6));
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid rgba(160,91,255,0.08);
+  box-shadow: 0 10px 30px rgba(160,91,255,0.06), inset 0 0 50px rgba(138,43,226,0.02);
+  text-align:center;
+}
+
+/* Neon top label */
+.neon-border {
+  width:100%;
+  padding:8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(138,43,226,0.06), rgba(95,212,255,0.03));
+  color: var(--neon-accent);
+  font-weight:700;
+  box-shadow: 0 0 18px rgba(160,91,255,0.06);
+}
+
+/* Motivational text */
+.motivational-text h3 {
+  margin: 10px 0 6px 0;
+  font-size: 1.05rem;
+  color: #f5ecff;
+  text-shadow: 0 0 10px rgba(160,91,255,0.07);
+}
+.motivational-text p { color: var(--muted); margin: 6px 0; line-height:1.5; }
+.motivational-text .highlight {
+  margin-top:8px;
+  color: var(--neon-accent);
+  font-weight:700;
+  text-shadow: 0 0 12px rgba(95,212,255,0.08);
+}
+
+/* ===========================
+   FEATURES GRID (animaciones)
+   =========================== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 18px;
+  z-index: 2;
+}
+
+.feature-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform 320ms cubic-bezier(.2,.9,.3,1), box-shadow 280ms;
+  box-shadow: 0 8px 28px rgba(8,6,12,0.6);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-height:150px;
+}
+.feature-card:hover {
+  transform: translateY(-8px) rotateX(1deg);
+  box-shadow: 0 18px 50px rgba(138,43,226,0.12), 0 0 26px rgba(160,91,255,0.04);
+}
+.feature-icon { font-size: 26px; color: var(--neon-accent); }
+
+/* ===========================
+   FOOTER
+   =========================== */
+.inicio-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-top:36px;
+  padding:16px;
+  border-top:1px solid rgba(255,255,255,0.03);
+  background: linear-gradient(180deg, rgba(255,255,255,0.005), transparent);
+  border-radius: 10px;
+}
+
+/* Social buttons */
+.social-btn {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:8px;
+  background: linear-gradient(90deg, rgba(138,43,226,0.12), rgba(95,212,255,0.06));
+  color: var(--muted);
+  text-decoration:none;
+  border: 1px solid rgba(255,255,255,0.02);
+  transition: transform var(--transition);
+}
+.social-btn:hover { transform: translateY(-3px); color: white; }
+
+/* ===========================
+   RESPONSIVE (mobile-friendly)
+   =========================== */
+@media (max-width: 992px) {
+  .hero-content { grid-template-columns: 1fr 320px; gap:20px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-card { max-width: 320px; }
+}
+
+@media (max-width: 740px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-right { order: -1; display:flex; justify-content:center; margin-bottom: 14px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .hero-stats { justify-content:flex-start; flex-wrap:wrap; gap:8px; }
+}
+
+/* ===========================
+   ACCENTS UTILS (small helpers)
+   =========================== */
+.glow-small {
+  text-shadow: 0 0 10px rgba(160,91,255,0.18);
+}
+.faint {
+  color: var(--muted);
+}
+
+/* ===========================
+   END — INICIO.CSS
+   =========================== */
+

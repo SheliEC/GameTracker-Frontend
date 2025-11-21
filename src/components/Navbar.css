@@ -1,0 +1,92 @@
+/* =============================== */
+/* NAVBAR NEÓN MORADO GAMER       */
+/* =============================== */
+
+:root {
+  --neon-purple: #a05bff;
+  --neon-purple-light: #d5b2ff;
+  --neon-purple-glow: rgba(160, 91, 255, 0.85);
+  --nav-bg: #14121b;
+  --text-light: #e9dbff;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-nav {
+  background-color: var(--nav-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 20px;
+  height: 55px;
+
+  border-bottom: 1px solid rgba(160, 91, 255, 0.25);
+  box-shadow: 0 0 12px rgba(160, 91, 255, 0.25);
+
+  gap: 50px;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+}
+
+/* LOGO */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo a {
+  color: var(--neon-purple-light);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  text-shadow: 0 0 8px var(--neon-purple-glow);
+  transition: 0.25s ease;
+}
+
+.nav-logo a:hover {
+  transform: scale(1.05);
+}
+
+/* LISTA DE LINKS */
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 35px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* LINKS */
+.nav-list li a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  transition: 0.25s ease;
+}
+
+/* HOVER */
+.nav-list li a:hover {
+  color: white;
+  background: rgba(160, 91, 255, 0.2);
+  box-shadow: 0 0 10px rgba(160, 91, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ACTIVE */
+.nav-list li a.active {
+  color: white;
+  background: rgba(160, 91, 255, 0.35);
+  border-bottom: 2px solid var(--neon-purple);
+  box-shadow: 0 0 14px rgba(160, 91, 255, 0.65);
+}

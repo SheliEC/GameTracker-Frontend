@@ -1,10 +1,13 @@
-// Archivo: frontend/src/App.jsx (CÓDIGO COMPLETO PARA NAVEGACIÓN Y RUTAS)
-
 // Archivo: frontend/src/App.jsx
 
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home.jsx'; // <--- Añadir .jsx si no funciona
-import Stats from './pages/Stats.jsx'; // <--- Añadir .jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Stats from './pages/Stats';
+import Inicio from './pages/Inicio';
+import Reviews from "./pages/Reviews";
+
+import Navbar from "./components/Navbar";  // ⬅️ Usamos TU barra bonita
 import { GameContextProvider } from './context/GameContext';
 
 function App() {
@@ -12,29 +15,19 @@ function App() {
         <div className="App">
             <GameContextProvider>
                 <BrowserRouter>
-                    <header>
-                        <nav>
-                            <h1>GameTracker</h1>
-                            <div className="nav-links">
-                                {/* Enlaces de navegación */}
-                                <Link to="/">Biblioteca</Link>
-                                <Link to="/estadisticas">Estadísticas</Link>
-                            </div>
-                        </nav>
-                    </header>
+
+                    {/* ⬅️ Navbar global bonito */}
+                    <Navbar />
+
                     <div className="pages">
                         <Routes>
-                            <Route 
-                                path="/" 
-                                element={<Home />} 
-                            />
-                            {/* Nueva Ruta para Estadísticas */}
-                            <Route 
-                                path="/estadisticas" 
-                                element={<Stats />} 
-                            />
+                            <Route path="/" element={<Inicio />} />
+                            <Route path="/biblioteca" element={<Home />} />
+                            <Route path="/reseñas" element={<Reviews />} />
+                            <Route path="/estadisticas" element={<Stats />} />
                         </Routes>
                     </div>
+
                 </BrowserRouter>
             </GameContextProvider>
         </div>

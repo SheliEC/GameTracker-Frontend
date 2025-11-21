@@ -1,0 +1,263 @@
+.library-page {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--color-text-light);
+}
+.game-form {
+  background: rgba(30, 30, 40, 0.7);
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 0 14px rgba(138, 43, 226, 0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  margin-bottom: 35px;
+}
+
+.game-form label {
+  display: block;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+.game-form input,
+.game-form select {
+  width: 100%;
+  padding: 12px;
+  background: #181818;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--color-text-light);
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.game-form input:focus,
+.game-form select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+}
+
+.btn-submit {
+  margin-top: 16px;
+  padding: 12px;
+  width: 100%;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--color-primary), var(--neon-blue));
+  color: white;
+  transition: 0.25s;
+}
+
+.btn-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+}
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: rgba(25,25,35,0.7);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.2);
+  margin-bottom: 30px;
+}
+
+.game-controls select {
+  padding: 10px;
+  border-radius: 10px;
+  background: #181818;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+.search-box {
+  margin: 20px 0;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #181818;
+  color: white;
+  outline: none;
+  transition: 0.2s;
+}
+
+.search-box input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+}
+.game-list {
+  margin-top: 35px;
+}
+
+.game-list h2 {
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.game-card {
+  background: rgba(35,35,45,0.75);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
+.game-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.game-card h3 {
+  margin: 10px 0 5px;
+  color: var(--color-primary);
+}
+
+.game-detail {
+  color: var(--color-text-muted);
+  margin: 4px 0;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.btn-edit {
+  background: #5fd4ff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #e63946;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.8;
+}
+.review-box {
+  background: rgba(180, 150, 255, 0.12);
+  border: 1px solid rgba(180, 150, 255, 0.25);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  color: #e5d8ff;
+  font-style: italic;
+  font-size: 0.95rem;
+  box-shadow: 0 0 6px rgba(162, 95, 255, 0.15);
+
+  /* 🔥 Evitar que el texto se salga */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+/* 🌀 CONTENEDOR DEL FLIP */
+.flip-card-container {
+  perspective: 1100px;
+  width: 260px;
+  height: 100%;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.flipped .flip-card {
+  transform: rotateY(180deg);
+}
+
+/* CARA FRONTAL Y TRASERA */
+.flip-front,
+.flip-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: 14px;
+}
+
+/* 🔵 TRASERA */
+.flip-back {
+  transform: rotateY(180deg);
+  background: #1b1b1b;
+  padding: 15px;
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+  border: 1px solid rgba(138, 43, 226, 0.4);
+}
+
+/* 📝 FORMULARIO DENTRO DE LA TARJETA */
+.edit-card h3 {
+  text-align: center;
+  color: #d8b6ff;
+  margin-bottom: 10px;
+}
+
+.edit-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-card input,
+.edit-card textarea,
+.edit-card select {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  padding: 10px;
+  color: white;
+  border-radius: 8px;
+}
+
+.edit-card button {
+  background: linear-gradient(90deg, #8a2be2, #5fd4ff);
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.edit-card button:hover {
+  box-shadow: 0 0 12px rgba(138, 43, 226, 0.5);
+  transform: translateY(-2px);
+}
+

@@ -1,0 +1,163 @@
+/* ======================================= */
+/*        PÁGINA DE RESEÑAS - NEON         */
+/* ======================================= */
+
+.reviews-page {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    color: white;
+}
+
+.reviews-page h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #d7b7ff;
+    text-shadow: 0 0 12px rgba(147, 84, 255, 0.6);
+    margin-bottom: 25px;
+}
+
+/* TARJETA DEL JUEGO */
+.review-game-card {
+    background: #15141b;
+    border: 1px solid rgba(162, 95, 255, 0.25);
+    box-shadow: 0 0 18px rgba(162, 95, 255, 0.25);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: 0.25s ease;
+}
+
+.review-game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(162, 95, 255, 0.6);
+}
+
+.review-game-card h3 {
+    color: #e7d5ff;
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+}
+
+/* RESEÑA */
+.review-main-text {
+    background: rgba(147, 84, 255, 0.15);
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    color: #e9d8ff;
+    border: 1px solid rgba(147, 84, 255, 0.25);
+    box-shadow: 0 0 12px rgba(147, 84, 255, 0.25);
+}
+
+/* LIKE */
+.like-btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+    margin-top: 10px;
+}
+
+.like-btn.liked {
+    background: linear-gradient(90deg, #4bceff, #9eedff);
+    color: black;
+    box-shadow: 0 0 12px rgba(95, 212, 255, 0.5);
+}
+
+.like-btn.not-liked {
+    background: linear-gradient(90deg, #ff4e4e, #ff7a7a);
+    color: white;
+    box-shadow: 0 0 12px rgba(255, 78, 78, 0.5);
+}
+
+.like-btn:hover {
+    transform: translateY(-3px);
+}
+
+/* COMENTARIOS */
+.comments-title {
+    margin-top: 18px;
+    color: #d7b7ff;
+    font-size: 1.2rem;
+    text-shadow: 0 0 6px rgba(147, 84, 255, 0.5);
+}
+
+.comment-card {
+    background: #1d1c24;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 8px;
+    border: 1px solid rgba(147, 84, 255, 0.2);
+    box-shadow: 0 0 10px rgba(147, 84, 255, 0.2);
+}
+
+.comment-card p {
+    color: #e0d0ff;
+}
+
+/* Botones pequeños */
+.comment-btn {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    margin-right: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.comment-btn.edit {
+    background: linear-gradient(90deg, #8a2be2, #b47bff);
+    color: white;
+}
+
+.comment-btn.delete {
+    background: linear-gradient(90deg, #ff4e4e, #ff7a7a);
+    color: white;
+}
+
+.comment-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* FORMULARIO COMENTAR */
+.comment-form {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.comment-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #2a2a36;
+    color: #f0eaff;
+    border: 1px solid #3a3a4a;
+}
+
+.comment-input:focus {
+    border-color: #9a4dff;
+    box-shadow: 0 0 10px rgba(147, 84, 255, 0.5);
+    outline: none;
+}
+
+.comment-submit {
+    padding: 10px 14px;
+    background: linear-gradient(90deg, #8a2be2, #5fd4ff);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.comment-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 22px rgba(95, 212, 255, 0.45);
+}

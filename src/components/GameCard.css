@@ -1,0 +1,27 @@
+.game-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* columna izquierda */
+.card-text {
+    width: 65%;
+}
+
+/* imagen a la derecha */
+.game-cover {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 3px solid #b26bff; /* contorno lila */
+    box-shadow: 0 0 15px rgba(178, 107, 255, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* animación al pasar el mouse */
+.game-cover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(178, 107, 255, 0.8);
+}

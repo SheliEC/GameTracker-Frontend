@@ -1,8 +1,6 @@
-// Archivo: frontend/src/hooks/useGamesHook.js
+// Archivo: frontend/src/hooks/useDeleteGameHook.js 
 
-// Archivo: frontend/src/hooks/useGamesHook.js (SOLUCIÓN DEFINITIVA)
-
-import { useState, useEffect, useCallback } from 'react'; // <--- CAMBIO 1: AGREGAR useCallback
+import { useState, useEffect, useCallback } from 'react';  
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:4000/api/games';
@@ -12,9 +10,6 @@ const useGamesHook = () => {
     const [games, setGames] = useState(null); 
     const [isLoading, setIsLoading] = useState(true); 
     const [error, setError] = useState(null); 
-
-   // Archivo: frontend/src/hooks/useGamesHook.js (FUNCIÓN DISPATCH CON UPDATE)
-// ... (El código de importaciones y estados va arriba) ...
 
     // 2. FUNCIÓN DE ACTUALIZACIÓN DE ESTADO (DISPATCH)
     const dispatch = useCallback((action) => {

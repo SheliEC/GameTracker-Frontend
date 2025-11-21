@@ -2,6 +2,8 @@
 
 import React, { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
+import "./Stats.css";
+
 
 const Stats = () => {
     const { games, isLoading, error } = useContext(GameContext);
@@ -25,7 +27,7 @@ const Stats = () => {
     const averageHours = totalGames > 0 ? (totalHours / totalGames).toFixed(1) : 0; // Promedio con un decimal
 
     // Promedio de Calificación (Solo para juegos calificados)
-    const ratedGames = games.filter(game => game.rating && game.rating >= 1 && game.rating <= 10);
+    const ratedGames = games.filter(game => game.rating && game.rating >= 1 && game.rating <= 5);
     const totalRatingSum = ratedGames.reduce((sum, game) => sum + game.rating, 0);
     const averageRating = ratedGames.length > 0 ? (totalRatingSum / ratedGames.length).toFixed(1) : 0;
     
@@ -55,7 +57,7 @@ const Stats = () => {
             
             <div className="stat-card">
                 <h3>Calificación Promedio</h3>
-                <p>⭐ {averageRating} / 10</p>
+                <p>⭐ {averageRating} / 5</p>
             </div>
             
             {bestRatedGame && (

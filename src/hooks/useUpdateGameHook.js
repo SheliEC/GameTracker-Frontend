@@ -30,4 +30,4 @@ const useUpdateGameHook = () => {
     return { updateGame, isLoading, error };
 };
 
-export default useUpdateGameHook; 
+export default useUpdateGameHook;

@@ -1,16 +1,23 @@
-// Archivo: frontend/src/components/GameForm.jsx (CON CAMPOS ADICIONALES)
+// Archivo: frontend/src/components/GameForm.jsx 
 
 import { useState, useContext } from 'react';
 import useCreateGameHook from '../hooks/useCreateGameHook';
 import { GameContext } from '../context/GameContext'; 
+import "./GameForm.css";
+ 
+const categories = [
+    "Acción", "Aventura", "RPG", "Shooter", "Deportes", "Estrategia",
+    "Simulación", "Carreras", "Indie", "Puzzle", "Terror", "Plataformas"
+];
 
 function GameForm() {
-    // ⬇️ ESTADOS: Añadimos rating y review
     const [title, setTitle] = useState('');
     const [platform, setPlatform] = useState('');
     const [hoursPlayed, setHoursPlayed] = useState(''); 
-    const [rating, setRating] = useState(''); // Nuevo
-    const [review, setReview] = useState(''); // Nuevo
+    const [rating, setRating] = useState('');
+    const [review, setReview] = useState('');
+    const [category, setCategory] = useState('');
+    const [coverImage, setCoverImage] = useState(""); // URL de la imagen
     const [error, setError] = useState(null); 
 
     const { createGame, isLoading, error: apiError } = useCreateGameHook();
@@ -21,10 +28,17 @@ function GameForm() {
         setError(null);
         
         const hoursToSend = hoursPlayed ? Number(hoursPlayed) : 0; 
-        const ratingToSend = rating ? Number(rating) : null; // Enviamos null si está vacío
+        const ratingToSend = rating ? Number(rating) : null;
 
-        // ⬇️ DATOS: Incluir rating y review
-        const gameData = { title, platform, hoursPlayed: hoursToSend, rating: ratingToSend, review };
+        const gameData = { 
+            title, 
+            platform, 
+            hoursPlayed: hoursToSend, 
+            rating: ratingToSend, 
+            review, 
+            category, 
+            coverImage // ⬅️ ahora es solo URL
+        };
 
         if (!title || !platform) {
             setError('El título y la plataforma son campos obligatorios.');
@@ -36,12 +50,14 @@ function GameForm() {
         if (newGame) {
             dispatch({ type: 'CREATE_GAME', payload: newGame });
 
-            // ⬇️ LIMPIEZA DE ESTADOS
+            // LIMPIAR CAMPOS
             setTitle('');
             setPlatform('');
             setHoursPlayed('');
             setRating('');
             setReview('');
+            setCategory('');
+            setCoverImage("");
         }
     };
 
@@ -70,21 +86,48 @@ function GameForm() {
                 value={hoursPlayed}
             />
             
-            {/* ⬇️ NUEVOS CAMPOS: Calificación y Reseña */}
-            <label>Calificación (1-10):</label>
+            <label>Calificación (1-5):</label>
             <input 
                 type="number" 
-                min="1" max="10"
+                min="1" max="5"
                 onChange={(e) => setRating(e.target.value)}
                 value={rating}
             />
             
+            <label>Categoría:</label>
+            <select 
+                value={category} 
+                onChange={(e) => setCategory(e.target.value)}
+            >
+                <option value="">Seleccionar...</option>
+                {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                ))}
+            </select>
+
+            {/* 🔵 NUEVO INPUT: pegar URL */}
+            <label>URL de la Imagen:</label>
+            <input 
+                type="text"
+                placeholder="Pega aquí la URL de la portada"
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+            />
+
+            {/* PREVISUALIZACIÓN */}
+            {coverImage && (
+                <img 
+                    src={coverImage}
+                    alt="Vista previa"
+                    style={{ width: "120px", borderRadius: "10px", marginTop: "10px" }}
+                />
+            )}
+
             <label>Reseña:</label>
             <textarea
                 onChange={(e) => setReview(e.target.value)}
                 value={review}
             />
-            {/* ⬆️ FIN NUEVOS CAMPOS */}
 
             <button disabled={isLoading} type="submit">
                 {isLoading ? 'Añadiendo...' : 'Añadir Juego'}
